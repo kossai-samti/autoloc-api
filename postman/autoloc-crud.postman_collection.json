@@ -24,6 +24,10 @@
           "request": { "method": "GET", "url": "{{baseUrl}}/agence/retrieve-all-agences" }
         },
         {
+          "name": "GET - Une agence",
+          "request": { "method": "GET", "url": "{{baseUrl}}/agence/retrieve-agence/{{id}}" }
+        },
+        {
           "name": "POST - Créer une agence",
           "request": {
             "method": "POST",
@@ -55,6 +59,10 @@
           "request": { "method": "GET", "url": "{{baseUrl}}/client/retrieve-all-clients" }
         },
         {
+          "name": "GET - Un client",
+          "request": { "method": "GET", "url": "{{baseUrl}}/client/retrieve-client/{{id}}" }
+        },
+        {
           "name": "POST - Créer un client",
           "request": {
             "method": "POST",
@@ -84,6 +92,10 @@
         {
           "name": "GET - Tous les véhicules",
           "request": { "method": "GET", "url": "{{baseUrl}}/vehicule/retrieve-all-vehicules" }
+        },
+        {
+          "name": "GET - Un véhicule",
+          "request": { "method": "GET", "url": "{{baseUrl}}/vehicule/retrieve-vehicule/{{id}}" }
         },
         {
           "name": "POST - Créer un véhicule",
