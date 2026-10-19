@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.repository.AgenceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class AgenceService implements IAgenceService {
 
     @Override
     public Agence updateAgence(Agence a) {
+        ensureExistingAgence(a.getIdAgence());
         return agenceRepository.save(a);
     }
 
@@ -37,7 +40,14 @@ public class AgenceService implements IAgenceService {
 
     @Override
     public void removeAgence(Long idAgence) {
+        ensureExistingAgence(idAgence);
         agenceRepository.deleteById(idAgence);
+    }
+
+    private void ensureExistingAgence(Long idAgence) {
+        if (idAgence == null || !agenceRepository.existsById(idAgence)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Agence introuvable");
+        }
     }
 
     @Override

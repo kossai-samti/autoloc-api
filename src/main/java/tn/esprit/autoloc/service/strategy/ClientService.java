@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.repository.ClientRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class ClientService implements IClientService {
 
     @Override
     public Client updateClient(Client c) {
+        ensureExistingClient(c.getIdClient());
         return clientRepository.save(c);
     }
 
@@ -37,7 +40,14 @@ public class ClientService implements IClientService {
 
     @Override
     public void removeClient(Long idClient) {
+        ensureExistingClient(idClient);
         clientRepository.deleteById(idClient);
+    }
+
+    private void ensureExistingClient(Long idClient) {
+        if (idClient == null || !clientRepository.existsById(idClient)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client introuvable");
+        }
     }
 
     @Override
